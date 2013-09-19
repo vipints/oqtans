@@ -1,0 +1,8 @@
+======================
+oqtans python packages
+======================
+
+INTERPRETER python 2.6 >=
+
+easy_install --prefix ./../oqtans_dep/ HTSeq
+
