@@ -5,8 +5,25 @@ A Galaxy wrapper for DEXSeq version 1.6.0
 DEXSeq is focused on finding differential exon usage using RNA-seq exon counts between samples with different experimental designs. 
 DEXSeq: http://www.bioconductor.org/packages/release/bioc/html/DEXSeq.html
 
+Requirements:
+-------------
+    Python, HTSeq package :- Preprocessing of sequencing reads and GFF files
+    R, Bio-conductor package :- Required for DEXSeq 
+    SAMTOOLS :- Sequencing read processing 
+
 Contents:
 ---------
+
+./bin 
+    Contains a config file for running DEXSeq in different settings, setup_dexseq-hts.sh
+    will help to create the config file according to your local work station. 
+
+./setup_dexseq-hts.sh
+    Setup script, which helps to set the right path to the config file present in the bin
+    folder. 
+    
+./README 
+    Basic information about the wrapper 
 
 ./galaxy 
     Galaxy tool configuration file can be found here. 
