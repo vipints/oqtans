@@ -35,11 +35,16 @@ shift
 RES_WD=${1}
 shift
 
+## associated array with sequencing type.
+declare -A SEQ_TYPE=( [no]=SE [yes]=PE )
+
 echo %%%%%%%%%%%%%%%%%%%%%%%
 echo % 1. Data preparation %
 echo %%%%%%%%%%%%%%%%%%%%%%%
 echo
-mkdir -p `dirname $RES_WD`
+
+mkdir -p ${RES_WD}
+echo extra file path $RES_WD
 tmpGTF=`mktemp --tmpdir=/tmp`
 
 echo load the genome annotation in GFF file 
@@ -52,45 +57,28 @@ echo %%%%%%%%%%%%%%%%%%%%
 echo % 2. Read counting %
 echo %%%%%%%%%%%%%%%%%%%%
 echo
+
 tmpFILE=`mktemp --tmpdir=/tmp`
 echo $tmpFILE
-echo file'\t'group'\t'replicate > ${tmpFILE}_CONDITIONS.tab
+echo -e '\t'condition'\t'libType > ${tmpFILE}_CONDITIONS.tab
 
 COND=0
-CNT=0
 for REPLICATE_GROUP in $@
 do
     IFS=':'
     COND=$((COND+1))
-    REP=0
     for BAM_FILE in ${REPLICATE_GROUP}
     do
         ## different group information 
-        REP=$((REP+1))
         REPNAME=$(basename ${BAM_FILE%.dat})
-        echo ${REPNAME}'\t'$COND'\t'$REP >> ${tmpFILE}_CONDITIONS.tab
-
-        tmpfname=`mktemp --tmpdir=/tmp`
+        echo -e ${REPNAME}"\t"$COND"\t"${SEQ_TYPE[$MATE_PAIR]} >> ${tmpFILE}_CONDITIONS.tab
         
         ## counting the reads 
-        ${SAMTOOLS_DIR}/samtools view -h $BAM_FILE | ${PYTHON_PATH} ${DIR}/dexseq_count.py -p ${MATE_PAIR} -s ${LIBTP} -a ${minQL} ${tmpGTF} - ${tmpfname}
-        ## add a column identifier 
-        echo exons'\t'${REPNAME}'\n'$(cat ${tmpfname}) > ${tmpfname}
+        ${SAMTOOLS_DIR}/samtools view -h $BAM_FILE | ${PYTHON_PATH} ${DIR}/dexseq_count.py -p ${MATE_PAIR} -s ${LIBTP} -a ${minQL} ${tmpGTF} - ${RES_WD}/${REPNAME}
 
-        ## paste columns together for exons 
-        if [ $CNT = 0 ]
-        then 
-            cat ${tmpfname} > ${tmpFILE}_COUNTS.tab
-        else
-            tmpfns=`mktemp --tmpdir=/tmp`
-            cut -f 2 ${tmpfname} | paste -d"\t" ${tmpFILE}_COUNTS.tab - > ${tmpfns}
-            mv ${tmpfns} ${tmpFILE}_COUNTS.tab
-        fi
-        ## clean up and counter setting 
-        rm -fr ${tmpfname}
-        CNT=1
         echo 
     done
+    echo conuted condition ${COND} 
 done
 echo counted reads map to each exon.
 echo 
@@ -100,9 +88,11 @@ echo % 3. Differential testing %
 echo %%%%%%%%%%%%%%%%%%%%%%%%%%%
 echo
 
-echo "cat ${DIR}/../src/run_DEXseq.R | $R_PATH --slave --args $tmpfile ${RES_FILE} $#" 
-cat ${DIR}/../src/run_DEXseq.R | $R_PATH --slave --args $tmpfile ${RES_FILE} 
+echo "cat ${DIR}/run_DEXseq.R | $R_PATH --slave --args $tmpFILE $RES_WD $tmpGTF ${RES_FILE} $#" 
+cat ${DIR}/run_DEXseq.R | $R_PATH --slave --args $tmpFILE $RES_WD $tmpGTF ${RES_FILE} 
 
+## clean up
+rm -fr ${RES_WD} ${tmpGTF} ${tmpFILE} 
 echo %%%%%%%%
 echo % Done %
 echo %%%%%%%%
