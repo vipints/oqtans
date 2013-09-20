@@ -1,0 +1,76 @@
+2012-02-06  Jaroslav Hajek  <highegg@gmail.com>
+
+	* src/sqrder.f, src/dqrder.f, src/cqrder.f, src/zqrder.f: Fix fast
+	return conditions for out-of-bounds row.
+
+2010-02-11  Jaroslav Hajek  <highegg@gmail.com>
+
+	* test/utils.f: Test CHERK and ZHERK results for validity. Warn about
+	possibly buggy BLAS routines.
+	* test/report_results: Dump out the warnings at the end.
+
+2010-02-11  Jaroslav Hajek  <highegg@gmail.com>
+
+	* test/utils.f: Correct invalid calls to xLANGE. Make dummy workspace
+	decls consistent.
+
+2010-02-11  Jaroslav Hajek  <highegg@gmail.com>
+
+	* test/Makefile: Ensure the test output file is created to prevent
+	errors from report_results.
+
+2010-01-19  Fabian Groffen <grobian@gentoo.org>
+
+	* Makeconf: Define DESTDIR.
+	* src/Makefile: Prefix DESTDIR to install targets, to comply with GNU
+	Makefile standard.
+
+2010-01-19  Fabian Groffen <grobian@gentoo.org>
+
+	* src/Makefile: Define SOEXT and set it correctly for Darwin.
+	Use it in build and install rules.
+
+2010-01-11  Jaroslav Hajek  <highegg@gmail.com>
+
+	* Makeconf: Mark version 1.1.
+	* README: Document LU updating routines.
+
+2009-10-08  Jaroslav Hajek  <highegg@gmail.com>
+
+	* src/slup1up.f: New source.
+	* src/dlup1up.f: New source.
+	* src/clup1up.f: New source.
+	* src/zlup1up.f: New source.
+	* src/Makefile: Include them.
+	* src/slu1up.f: Mention algorithm source.
+	* src/dlu1up.f: Ditto.
+	* src/clu1up.f: Ditto.
+	* src/zlu1up.f: Ditto.
+	* src/EXPORTS: Update.
+	* test/utils.f (P2IPIV, SLUPGEN, DLUPGEN, CLUPGEN, ZLUPGEN, 
+	SLUPCHK, DLUPCHK, CLUPCHK, ZLUPCHK): New subroutines.
+	* test/tlup1up.f: New source.
+	* test/Makefile: Include it.
+
+2009-10-05  Jaroslav Hajek  <highegg@gmail.com>
+
+	* src/slu1up.f: New source.
+	* src/dlu1up.f: New source.
+	* src/clu1up.f: New source.
+	* src/zlu1up.f: New source.
+	* src/Makefile: Include them in build.
+	* test/utils.f (SLUGEN, DLUGEN, CLUGEN, ZLUGEN, 
+	SLUCHK, DLUCHK, CLUCHK, ZLUCHK): New subroutines.
+	* test/tlu1up.f: New source.
+	* test/Makefile: Include it.
+
+2009-02-06  Jordi Gutiérrez Hermoso  <jordigh@gmail.com>
+
+	* Makeconf: Set default PREFIX.
+	* Makefile: Add install targets.
+	* src/Makefile: Likewise.
+
+2009-02-04  Jaroslav Hajek  <highegg@gmail.com>
+
+	* ChangeLog: Create.
+	* src/Makefile: Specify BLAS and LAPACK when creating dynamic library.
