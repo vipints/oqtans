@@ -65,7 +65,8 @@ XBLASLIB     =
 #  machine-specific, optimized BLAS library should be used whenever
 #  possible.)
 #
-BLASLIB      = ../../librefblas.a
+#BLASLIB      = ../../librefblas.a
+BLASLIB      = ${OQTANS_DEP_PATH}/lib/libblas.a
 LAPACKLIB    = liblapack.a
 TMGLIB       = libtmglib.a
 LAPACKELIB   = liblapacke.a
