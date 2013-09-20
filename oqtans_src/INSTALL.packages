@@ -2,3 +2,20 @@
 oqtans General packages
 =======================
 
+oqtans by default, ships the compiled packages describes here. 
+
+Compiling Octave with 64-bit Indexing 
+-------------------------------------
+    To use arrays larger than 2 GB, Octave has to be configured with the option --enable-64. 
+    
+    The following instructions were used on GCC 4.6.3 x86_64 Ubuntu system. 
+
+    Required libraries: 
+    a) blas and lapack http://www.netlib.org/lapack 3.4.2
+    
+    Copy the file make.inc.example and name it make.inc. The options -fdefault-integer-8 and 
+    -fPIC (on 64-bit CPU) have to be added to the variable OPTS and NOOPT.
+
+    b)
+
+    [1] http://www.gnu.org/software/octave/doc/interpreter/Compiling-Octave-with-64_002dbit-Indexing.html
