@@ -1,22 +1,22 @@
 ==================================================
 oqtans: Online Quantitative Transcriptome Analysis
 ==================================================
-We present a Machine Learning powered platform for quantitatively analyzing RNA-seq experiments, called oqtans.
+A Machine Learning powered platform for quantitatively analyzing RNA-sequencing experiments.
 
-http://oqtans.org
+Details:
+    http://oqtans.org
 
-Public Server:
-http://galaxy.cbio.mskcc.org 
+Public Computing Server:
+    http://galaxy.cbio.mskcc.org 
 
 oqtans Demo Server:
-http://cloud.oqtans.org 
+    http://cloud.oqtans.org 
 
 oqtans Amazon Machine Image: 
-coming soon! 
+    coming soon! 
 
 Contact: 
-support@oqtans.org 
+    support [at] oqtans.org 
 
 Available under GPL license
-
 
