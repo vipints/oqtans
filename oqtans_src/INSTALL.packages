@@ -19,3 +19,12 @@ Compiling Octave with 64-bit Indexing
     b)
 
     [1] http://www.gnu.org/software/octave/doc/interpreter/Compiling-Octave-with-64_002dbit-Indexing.html
+
+
+bwa
+bowtie
+bowtie2
+
+automatic genome index file creation 
+
+STAR https://rna-star.googlecode.com/files/STAR_2.3.0e.Linux_x86_64.tgz

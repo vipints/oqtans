@@ -4,5 +4,10 @@ oqtans python packages
 
 INTERPRETER python 2.6 >=
 
-easy_install --prefix ./../oqtans_dep/ HTSeq
+easy_install --prefix=${OQTANS_DEP_PATH} HTSeq
 
+easy_install --prefix=${OQTANS_DEP_PATH} rpy2
+easy_install --prefix=${OQTANS_DEP_PATH} pylab
+easy_install --prefix=${OQTANS_DEP_PATH} matplotlib
+
+easy_install --prefix=${OQTANS_DEP_PATH} biopython

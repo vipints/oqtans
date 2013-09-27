@@ -7,3 +7,9 @@ INTERPRETER R Version 3.0.1
 source('http://bioconductor.org/biocLite.R')
 biocLite("DEXSeq")
 
+biocLite("DESeq2") 
+biocLite("DESeq") 
+biocLite("edgeR") 
+ 
+biocLite("topGO") 
+biocLite("graphviz")
