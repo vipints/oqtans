@@ -4,9 +4,23 @@ oqtans python packages
 
 INTERPRETER python 2.6 >=
 
+Remove the system wide installation of numpy scipy with sudo rights. 
+
+    apt-get --purge remove python-numpy 
+    apt-get --purge remove python-scipy 
+
+Install them with easy_install python package manager:
+    easy_install --prefix=${OQTANS_DEP_PATH} numpy
+    easy_install --prefix=${OQTANS_DEP_PATH} scipy 
+
+Make sure that ${OQTANS_DEP_PATH}/lib/python{VERSION}/site-packages/ 
+path is under PYTHONPATH env variable. 
+
+
 easy_install --prefix=${OQTANS_DEP_PATH} HTSeq
 
 easy_install --prefix=${OQTANS_DEP_PATH} rpy2
+
 easy_install --prefix=${OQTANS_DEP_PATH} pylab
 easy_install --prefix=${OQTANS_DEP_PATH} matplotlib
 
