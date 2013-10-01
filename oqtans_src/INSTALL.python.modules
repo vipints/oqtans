@@ -16,12 +16,26 @@ Install them with easy_install python package manager:
 Make sure that ${OQTANS_DEP_PATH}/lib/python{VERSION}/site-packages/ 
 path is under PYTHONPATH env variable. 
 
+    easy_install --prefix=${OQTANS_DEP_PATH} HTSeq
+    easy_install --prefix=${OQTANS_DEP_PATH} rpy2
+    easy_install --prefix=${OQTANS_DEP_PATH} pylab
+    easy_install --prefix=${OQTANS_DEP_PATH} matplotlib
+    easy_install --prefix=${OQTANS_DEP_PATH} biopython
 
-easy_install --prefix=${OQTANS_DEP_PATH} HTSeq
+To get the recent version of *antlr3* and *arff* py modules
+    cd ${OQTANS_SRC_PATH}
+    
+    wget -c http://www.antlr.org/download/Python/antlr_python_runtime-3.1.3.tar.gz
+    tar -xzf antlr_python_runtime-3.1.3.tar.gz
+    cd antlr_python_runtime-3.1.3
+    python setup.py build
+    python setup.py install --prefix=${OQTANS_DEP_PATH}
+    cd .. 
 
-easy_install --prefix=${OQTANS_DEP_PATH} rpy2
+    wget -c http://ptg.ucsd.edu/~staal/mit/arff/dist/arff-1.0c.tar.gz
+    tar -xzf arff-1.0c.tar.gz
+    cd arff-1.0c
+    python setup.py build
+    python setup.py install --prefix=${OQTANS_DEP_PATH}
+    cd .. 
 
-easy_install --prefix=${OQTANS_DEP_PATH} pylab
-easy_install --prefix=${OQTANS_DEP_PATH} matplotlib
-
-easy_install --prefix=${OQTANS_DEP_PATH} biopython
