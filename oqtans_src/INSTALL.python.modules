@@ -18,7 +18,6 @@ path is under PYTHONPATH env variable.
 
     easy_install --prefix=${OQTANS_DEP_PATH} HTSeq
     easy_install --prefix=${OQTANS_DEP_PATH} rpy2
-    easy_install --prefix=${OQTANS_DEP_PATH} pylab
     easy_install --prefix=${OQTANS_DEP_PATH} matplotlib
     easy_install --prefix=${OQTANS_DEP_PATH} biopython
 
