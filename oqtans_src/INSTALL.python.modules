@@ -5,36 +5,30 @@ oqtans python packages
 INTERPRETER python 2.6 >=
 
 Remove the system wide installation of numpy scipy with sudo rights. 
+depends on the linux distribution:
 
-    apt-get --purge remove python-numpy 
-    apt-get --purge remove python-scipy 
+    apt-get --purge remove python-numpy python-scipy 
+    or 
+    yum remove numpy scipy 
 
 Install them with easy_install python package manager:
     easy_install --prefix=${OQTANS_DEP_PATH} numpy
     easy_install --prefix=${OQTANS_DEP_PATH} scipy 
 
-Make sure that ${OQTANS_DEP_PATH}/lib/python{VERSION}/site-packages/ 
-path is under PYTHONPATH env variable. 
+Make sure that prefix path exists i.e, ${OQTANS_DEP_PATH}/lib/python{OQTANS_PYTHON_VERSION}/site-packages/ 
+Also the above location should present in PYTHONPATH env variable. If not, please add the same. 
 
+More packages: 
+    easy_install --prefix=${OQTANS_DEP_PATH} biopython
+    easy_install --prefix=${OQTANS_DEP_PATH} matplotlib
     easy_install --prefix=${OQTANS_DEP_PATH} HTSeq
     easy_install --prefix=${OQTANS_DEP_PATH} rpy2
-    easy_install --prefix=${OQTANS_DEP_PATH} matplotlib
-    easy_install --prefix=${OQTANS_DEP_PATH} biopython
 
-To get the recent version of *antlr3* and *arff* py modules
-    cd ${OQTANS_SRC_PATH}
-    
-    wget -c http://www.antlr.org/download/Python/antlr_python_runtime-3.1.3.tar.gz
-    tar -xzf antlr_python_runtime-3.1.3.tar.gz
-    cd antlr_python_runtime-3.1.3
-    python setup.py build
-    python setup.py install --prefix=${OQTANS_DEP_PATH}
-    cd .. 
+By default oqtans_src contains the 3.1.3 & 1.0 versions of *antlr3* and *arff* python modules.
+    To install the default version:
+        see oqtans_make_all.sh script 
 
-    wget -c http://ptg.ucsd.edu/~staal/mit/arff/dist/arff-1.0c.tar.gz
-    tar -xzf arff-1.0c.tar.gz
-    cd arff-1.0c
-    python setup.py build
-    python setup.py install --prefix=${OQTANS_DEP_PATH}
-    cd .. 
+    For future release version please visit the link and update the package accordingly.
+        wget -c http://www.antlr.org/download/Python/antlr_python_runtime-3.1.3.tar.gz
+        wget -c http://ptg.ucsd.edu/~staal/mit/arff/dist/arff-1.0c.tar.gz
 
