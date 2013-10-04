@@ -36,6 +36,10 @@ then
 
     easy_install --prefix=${OQTANS_DEP_PATH} numpy
     easy_install --prefix=${OQTANS_DEP_PATH} scipy 
+    easy_install --prefix=${OQTANS_DEP_PATH} biopython
+    easy_install --prefix=${OQTANS_DEP_PATH} matplotlib
+    easy_install --prefix=${OQTANS_DEP_PATH} HTSeq
+    easy_install --prefix=${OQTANS_DEP_PATH} rpy2
 
     for fn in antlr_python_runtime-3.1.3.tar.bz2 arff-1.0c.tar.bz2;
     do 
