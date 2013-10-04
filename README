@@ -20,3 +20,9 @@ Contact:
 
 Available under GPL license
 
+Configuration:
+==============
+    
+    Edit the master config file ./oqtans_config.sh to set the path. 
+
+    Go to ./oqtans_src/ directory and follow instructions in INSTALL file.
