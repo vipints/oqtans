@@ -2,29 +2,30 @@
 oqtans General packages
 =======================
 
-oqtans by default, ships the compiled packages describes here. 
+oqtans by default, ships the packages describes here. They are ready 
+to compile with all necessary configuration options. 
 
-Compiling Octave with 64-bit Indexing 
--------------------------------------
-    To use arrays larger than 2 GB, Octave has to be configured with the option --enable-64. 
-    
-    The following instructions were used on GCC 4.6.3 x86_64 Ubuntu system. 
+`oqtans_make_all.sh` script will take care of compiling all packages 
+according to linux distributions. 
 
-    Required libraries: 
-    a) blas and lapack http://www.netlib.org/lapack 3.4.2
-    
-    Copy the file make.inc.example and name it make.inc. The options -fdefault-integer-8 and 
-    -fPIC (on 64-bit CPU) have to be added to the variable OPTS and NOOPT.
+If you want to compile indivdual package, please uncompress the source
+file and execute the `oqtans_make.sh`. 
 
-    b)
+LAPACK 
 
-    [1] http://www.gnu.org/software/octave/doc/interpreter/Compiling-Octave-with-64_002dbit-Indexing.html
+export BLAS=${OQTANS_DEP_PATH}/lib
+export LAPACK=${OQTANS_DEP_PATH}/lib
 
-
-bwa
 bowtie
 bowtie2
+bwa
 
-automatic genome index file creation 
+TopHat 
+Cufflinks
+Cuffdiff 
 
-STAR https://rna-star.googlecode.com/files/STAR_2.3.0e.Linux_x86_64.tgz
+STAR 
+
+TODO:
+Automatic genome index creation script
+
