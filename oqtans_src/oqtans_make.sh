@@ -55,7 +55,7 @@ then
         cd ..
     done 
 
-    for fn in octave-3.6.4_x64.tar.bz2 swig-2.0.11.tar.bz2 shogun-2.0.0.tar.bz2 samtools-0.1.19.tar.bz2;
+    for fn in octave-3.6.4_x64.tar.bz2 swig-2.0.11.tar.bz2 shogun-2.0.0.tar.bz2 samtools-0.1.19.tar.bz2 STAR_2.3.0e.Linux_x86_64.tar.bz2;
     do 
         tar -xjf $fn
         cd $basedir/${fn%.tar.bz2}
@@ -74,7 +74,7 @@ fi
 #
 if [ "$1" == "clean" ];
 then
-    for fn in cmake-2.8.11.2 flex-2.5.37 gperf-3.0.4 lapack-3.4.2 ARPACK qrupdate-1.1.2 SuiteSparse-4.2.1 qhull glpk-4.51 octave-3.6.4_x64 swig-2.0.11 shogun-2.0.0 samtools-0.1.19; 
+    for fn in cmake-2.8.11.2 flex-2.5.37 gperf-3.0.4 lapack-3.4.2 ARPACK qrupdate-1.1.2 SuiteSparse-4.2.1 qhull glpk-4.51 octave-3.6.4_x64 swig-2.0.11 shogun-2.0.0; 
     do
         cd $basedir/${fn%.tar.bz2}
         echo ==============================================================
