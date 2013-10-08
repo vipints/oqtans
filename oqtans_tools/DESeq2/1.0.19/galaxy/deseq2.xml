@@ -1,5 +1,8 @@
 <tool id="deseq2-hts" name="DESeq2" version="1.0.19">
   <description> Differential gene expression analysis based on the negative binomial distribution</description>
+    <requirements>
+        <requirements type="package" version="3.0.1">R</requirements>
+    </requirements>
   <command interpreter="bash"> 
 ./../src/deseq2-hts.sh 
 

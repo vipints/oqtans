@@ -44,7 +44,7 @@ Getting started:
     a) Run ./oqtans_make.sh and setup paths and configuration options for DESeq2-hts.
 
     Inside the mex folder it execute the make file to create platform dependent .mex files 
-	    cd mex/Makefile 
+	    cd mex
 	    make [interpreter] 
             make octave for octave 
             make matlab for matlab 
