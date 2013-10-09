@@ -22,7 +22,13 @@ Make sure that prefix path exists i.e, ${OQTANS_DEP_PATH}/lib/python{OQTANS_PYTH
 Also the above location should present in PYTHONPATH env variable. If not, please add the same. 
     
     By default oqtans_make.sh script will install to ${OQTANS_DEP_PATH}/lib/python{OQTANS_PYTHON_VERSION}/site-packages/
+
     easy_install --prefix=${OQTANS_DEP_PATH} biopython
+    
+    Installation of matplotlib requires version of distribute (>=0.6.28)
+        easy_install -U --prefix=$OQTANS_DEP_PATH distribute 
+    This will force to update the package
+
     easy_install --prefix=${OQTANS_DEP_PATH} matplotlib
     easy_install --prefix=${OQTANS_DEP_PATH} HTSeq
     easy_install --prefix=${OQTANS_DEP_PATH} rpy2
