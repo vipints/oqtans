@@ -11,13 +11,9 @@ cd $OQTANS_PATH/rDiff/0.3/mex
 if [ "$1" == "" -o "$1" == "all" ];
 then
     make octave
-    cd ./../src/locfit/Source
-    make octave
 fi
 
 if [ "$1" == "clean" ];
 then
-    make clean
-    cd ./../src/locfit/Source
     make clean
 fi
