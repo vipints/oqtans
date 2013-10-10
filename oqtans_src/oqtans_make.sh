@@ -34,6 +34,14 @@ then
     export BLAS=${OQTANS_DEP_PATH}/lib
     export LAPACK=${OQTANS_DEP_PATH}/lib
 
+    if [ -d ${OQTANS_DEP_PATH}/lib/python${OQTANS_PYTHON_VERSION}/site-packages ]
+    then       
+	    echo "Using PYTHONPATH prefix as: ${OQTANS_DEP_PATH}/lib/python${OQTANS_PYTHON_VERSION}/site-packages"
+    else
+	    mkdir -p ${OQTANS_DEP_PATH}/lib/python${OQTANS_PYTHON_VERSION}/site-packages ## create PYTHONPATH dir
+	    mkdir -p ${OQTANS_DEP_PATH}/lib64/python${OQTANS_PYTHON_VERSION}/site-packages
+    fi 
+
     easy_install --prefix=${OQTANS_DEP_PATH} numpy
     easy_install --prefix=${OQTANS_DEP_PATH} scipy 
     easy_install --prefix=${OQTANS_DEP_PATH} biopython
