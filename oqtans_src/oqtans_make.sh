@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# compile all submodule required for oqtans 
+# compile all dependency modules required for oqtans 
 #
 set -e
 
