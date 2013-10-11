@@ -2,7 +2,7 @@
 oqtans deployment 
 =================
 
-To install the programs associated with oqtans 
+To compile binary files associated with oqtans submodules:
     bash oqtans_make.sh all 
 
 This will compile the necessary files for following programs:
@@ -31,6 +31,9 @@ for the following tools and place the files under GALAXY_PATH/tool-data/
     To generate new reference genome index please follow the instructions
     in README 
     example: PALMapper/0.5/galaxy/README 
+
+    TODO: 
+    automatic genome index generation or syncing from a remote source. 
 
 Contact
 -------
