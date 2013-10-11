@@ -6,3 +6,8 @@ Tool dependency packages
 
 Please see ./INSTALL for compiling dependencies for oqtans 
 
+It may take some minutes to compile the dependencies and once it 
+finish please move to ./../oqtans_tools/README for instructions 
+to compile tool specific binary files. 
+
+support [at] oqtans.org 
