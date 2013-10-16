@@ -34,7 +34,11 @@ Make sure that prefix path exists i.e,
 Then run
      ./oqtans_make.sh all
 
-This compiles all needed software packages and installs them to $OQTANS_DEP_PATH.
+This compile all needed software dependencies and installs them to $OQTANS_DEP_PATH.
+
+Now to compile all needed software components of oqtans tools please GO to:
+    cd ./../oqtans_tools 
+    and See the instructions in INSTALL file. 
 
 TODO:
     Automatic genome index creation program 
