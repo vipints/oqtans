@@ -18,7 +18,7 @@ Contact: support [at] oqtans.org
 ##### Configuration:
 ###### ==============
     
-Edit the master config file [./oqtans\_config.sh](https://github.com/ratschlab/oqtans/blob/master/oqtans_config.sh) 
-to set the path. To reflect the location of oqtans components, source it in GALAXY's ~/.bashrc.
+    Edit the master config file ./oqtans_config.sh to set the path. 
+    To reflect the location of oqtans components, source it in GALAXY's ~/.bashrc.
 
-Go to [./oqtans\_src/](https://github.com/ratschlab/oqtans_src)  directory and follow instructions in [INSTALL](https://github.com/ratschlab/oqtans_src/blob/master/INSTALL) file.
+    Go to ./oqtans_src/ directory and follow instructions in INSTALL file.
