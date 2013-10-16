@@ -2,12 +2,12 @@
 oqtans source packages 
 ======================
 
-Tool dependency packages
+This directory contains the source code of software dependencies of oqtans.
 
-Please see ./INSTALL for compiling dependencies for oqtans 
+See ./INSTALL for compiling instructions.
 
-It may take some minutes to compile the dependencies and once it 
-finish please move to ./../oqtans_tools/README for instructions 
-to compile tool specific binary files. 
+It may take several minutes to compile the dependencies and once 
+it finish, See ./../oqtans_tools/INSTALL for instructions to compile 
+tool specific binary files. 
 
 support [at] oqtans.org 
