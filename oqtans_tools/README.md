@@ -6,9 +6,9 @@
 
 [Available under GPL license](http://www.gnu.org/licenses/gpl.html)
 
-As stated in [./INSTALL](https://github.com/ratschlab/oqtans_tools/blob/master/INSTALL) file, to compile binary files associated with oqtans tool components, execute:
+As stated in ./INSTALL file, to compile binary files associated with oqtans tool components, execute:
 
-   bash [oqtans\_make.sh](https://github.com/ratschlab/oqtans_tools/blob/master/oqtans_make.sh) all
+    bash oqtans_make.sh all
 
 This will compile the necessary files for following programs:
 
@@ -31,9 +31,7 @@ To use the buit-in genome reference index files, please edit the index configura
     TopHat
     STAR
 
-To generate new reference genome index please follow the instructions in README
-
-   example: [README](https://github.com/ratschlab/oqtans_tools/blob/master/PALMapper/0.5/galaxy/README)
+To generate new reference genome index please follow the instructions in galaxy/README of individual tools. 
 
 TODO:
    automatic genome index generation or syncing from a remote source.
