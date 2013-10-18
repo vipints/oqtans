@@ -3,14 +3,8 @@ oqtans by default, ships the packages with necessary configuration options.
 Before trying to compile oqtans dependencies, install the following packages:
 
 Ubuntu/Debian:
-     make gcc g++ git libhdf5-lam-1.8.4 libfontconfig1 libgl1-mesa-glx 
-     libglu1-mesa libreadline5 libgfortran3 gfortran libqrupdate1 
-     python-dev pkg-config libncurses5-dev libreadline-dev libltdl-dev
-     libpcre3-dev libhdf5-serial-dev gnuplot libidn11-dev cmake m4
-     help2man texinfo texlive python2.6 (or python2.7)
-     libcholmod1.7.1 libcurl4-openssl-dev libglu1-mesa-dev libfltk1.3-dev
-     libfreetype6-dev libgraphicsmagick1-dev libgraphicsmagick++3 
-     libgraphicsmagick++1-dev libfontconfig1-dev libfftw3-3 
+    sudo apt-get update     
+    sudo apt-get install make gcc g++ git libhdf5-lam-1.8.4 libfontconfig1 libgl1-mesa-glx libglu1-mesa libreadline5 libgfortran3 gfortran libqrupdate1 python-dev pkg-config libncurses5-dev libreadline-dev libltdl-dev libpcre3-dev gnuplot libidn11-dev cmake m4 help2man texinfo texlive python2.7 libcholmod1.7.1 libcurl4-openssl-dev libglu1-mesa-dev libfltk1.3-dev libfreetype6-dev libgraphicsmagick1-dev libgraphicsmagick++3 libgraphicsmagick++1-dev libfontconfig1-dev
 
 Redhat/CentOS
      pkgconfig python-devel make gcc gcc-c++ cmake m4 texlive-latex texinfo 
@@ -29,7 +23,7 @@ Mac OS X (macports packages with system python v2.7)
 
 
 Make sure that prefix path exists i.e, 
-    ${OQTANS_DEP_PATH}/lib/python{OQTANS_PYTHON_VERSION}/site-packages/
+    ${OQTANS_DEP_PATH}/lib/python${OQTANS_PYTHON_VERSION}/site-packages/
 
 Then run
      ./oqtans_make.sh all
