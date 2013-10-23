@@ -9,7 +9,7 @@ A Machine Learning powered platform for quantitatively analyzing RNA-sequencing 
 
 [oqtans Demo Server](http://cloud.oqtans.org) 
 
-oqtans Amazon Machine Image for AWS platform: ami-65376a0c
+[oqtans Amazon Machine Image for AWS platform: ami-65376a0c](http://thecloudmarket.com/image/ami-65376a0c--oqtans-cloudman)
 
 Contact: support [at] oqtans.org
 
