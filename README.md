@@ -11,6 +11,8 @@ A Machine Learning powered platform for quantitatively analyzing RNA-sequencing 
 
 [oqtans Amazon Machine Image for AWS platform: ami-65376a0c](http://thecloudmarket.com/image/ami-65376a0c--oqtans-cloudman)
 
+share-string for Galaxy Cloudman: cm-ba5c56b95144e564f70e5762dc5fa177/shared/2013-11-07--22-16/
+
 Contact: support [at] oqtans.org
 
 [Available under GPL license](http://www.gnu.org/copyleft/gpl.html)
