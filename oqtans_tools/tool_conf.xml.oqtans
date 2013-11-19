@@ -13,7 +13,7 @@
    <tool file="oqtans/oqtans_tools/PALMapper/0.5/galaxy/genomemapper_wrapper.xml" />
    <label text="Spliced Alignment" id="spliced" />
    <tool file="oqtans/oqtans_tools/PALMapper/0.5/galaxy/palmapper_wrapper.xml" />
-   <tool file="oqtans/oqtans_tools/STAR/2.3/galaxy/star_aligner.xml" />
+   <tool file="oqtans/oqtans_tools/STAR/2.3/galaxy/star_aligner_wrapper.xml" />
    <tool file="oqtans/oqtans_tools/TopHat/1.4.1/galaxy/tophat_wrapper.xml" />
    <tool file="oqtans/oqtans_tools/TopHat/2.0.9/galaxy/tophat2_wrapper.xml" />
    <tool file="oqtans/oqtans_tools/ASP/0.3/galaxy/asp.xml" />
