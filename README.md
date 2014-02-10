@@ -1,6 +1,7 @@
 ###### ==================================================
 #### oqtans: Online Quantitative Transcriptome Analysis
 ###### ==================================================
+
 A Machine Learning powered platform for quantitatively analyzing RNA-sequencing experiments.
 
 [Details](http://oqtans.org)
@@ -18,9 +19,14 @@ Contact: support [at] oqtans.org
 [Available under GPL license](http://www.gnu.org/copyleft/gpl.html)
 
 ##### Configuration:
-###### ==============
+###### ============
     
     Edit the master config file ./oqtans_config.sh to set the path. 
     To reflect the location of oqtans components, source it in GALAXY's ~/.bashrc.
 
     Go to ./oqtans_src/ directory and follow instructions in INSTALL file.
+
+##### Reference:
+###### ========
+
+To cite this package in a publication, Please use this [paper](http://goo.gl/I75poH)
