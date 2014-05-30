@@ -1,6 +1,6 @@
 PALMapper use the same as GenomeMapper index set. To create the new genome index
 
-Usage: $OQTANS_PATH/PALMapper/0.5/pmidex genome.fa
+Usage: $OQTANS_PATH/PALMapper/0.5/pmidex -i genome.fa
 
 and add the entries in "genomemapper_indices.loc". Please make sure that the 
 fields are tab delimited, not space delimited, and have no trailing or 
