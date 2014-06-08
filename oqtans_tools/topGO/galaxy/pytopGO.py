@@ -1,16 +1,19 @@
 #!/usr/bin/env python 
-"""Wrapper script for topGO Ontology program. 
+"""
+Wrapper script for topGO Ontology program. 
 
 Usage:
 python topgo_main.py organism_name diff_gene_exp_data.in p-value fisher_test ontology_term
 
 Example:
-python topgo_main.py Arabidopsis_thaliana data/galaxy_import/gene_exp_col0.txt 0.01 fisher MF
+python pytopGO.py Arabidopsis_thaliana data/galaxy_import/gene_exp_col0.txt 0.01 fisher MF
 
-This program requires: 
-    rpy2
+Requirements:
+    rpy2 :- https://pypi.python.org/pypi/rpy2
 """
-import sys, re 
+
+import re 
+import sys
 import collections 
 import rpy2.robjects as robjects 
 
@@ -70,8 +73,10 @@ def exe_topGO(total_genes, gene_to_go, gene_pval, st_test, go_term):
     robjects.r.printGraph(go_data, results_fis, firstSigNodes=table_entries, useInfo = "def", fn="resultFile", pdfSW="TRUE")
 
 def __main__():
-    """main function 
     """
+    main function 
+    """
+
     try:
         organism = sys.argv[1]
         diff_exp_fname = sys.argv[2]
@@ -83,6 +88,7 @@ def __main__():
         sys.exit(-1)
 
     ## ? GO term to Gene ID Mapping file for organisms.
+    # FIXME 
     go_map_org=dict(Arabidopsis_thaliana="/mnt/galaxyTools/tools/oqtans/topGO/data/ATH_GO_TAIR.txt",
 		Drosophila_melanogaster="/mnt/galaxyTools/tools/oqtans/topGO/data/DM_GO_FB.txt",
 		Mus_musculus="/mnt/galaxyTools/tools/oqtans/topGO/data/MM_GO_MGI.txt",
