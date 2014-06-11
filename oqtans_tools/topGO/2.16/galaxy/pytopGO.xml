@@ -1,17 +1,14 @@
-<tool id="topgo" name="topGO" version="2.6.0">
+<tool id="topgo" name="topGO" version="2.16.0">
   <description>Enrichment analysis for Gene Ontology</description>
-  <requirements>
-	<requirement type="package" version="0.1">oqtans</requirement>
-  </requirements>
-  <command interpreter="bash"> 
-    ../src/topgo_conf.sh $topgo_out.extra_files_path $topgo_out $organism $diff_exp_genes $pvalue $stat_test $ontology_type 
+  <command interpreter="python"> 
+     pytopGO.py $topgo_out.extra_files_path $topgo_out $organism $diff_exp_genes $pvalue $stat_test $ontology_type 
   </command>
   <inputs>
-	<param name="organism" type="select" label="Gene list correspnding the organism" help="Select one">
-    <option value="Arabidopsis_thaliana">Arabidopsis thaliana</option>
-    <option value="Drosophila_melanogaster">Drosophila melanogaster</option>
-    <option value="Mus_musculus">Mus musculus</option>
-    <option value="Saccharomyces_cerevisiae">Saccharomyces cerevisiae</option>
+	<param name="organism" type="select" label="Gene Ontology map file of" help="Gene2GO mapping file of the listed organisms are available.">
+        <option value="A_thaliana">Arabidopsis thaliana</option>
+        <option value="D_melanogaster">Drosophila melanogaster</option>
+        <option value="M_musculus">Mus musculus</option>
+        <option value="S_cerevisiae">Saccharomyces cerevisiae</option>
     </param>
 	<param format="txt" name="diff_exp_genes" type="data" label="Gene list" help="e.g. differentially expressed genes with a score."/>
     <param name="pvalue" type="float" value="0.01" label="p-value threshold" help="selecting candidate genes for GO analysis with a p-value."/>
@@ -26,7 +23,7 @@
   </inputs>
 
   <outputs>
-    <data format="pdf" name="topgo_out" label="topGO GO structure of ${diff_exp_genes.name}"/>
+    <data format="pdf" name="topgo_out" label="${tool.name} GO graph of ${diff_exp_genes.name}"/>
   </outputs>
 
   <help>
@@ -35,9 +32,9 @@
 
 **What it does** 
 
-`topGO` (topology-based Gene Ontology scoring) is a software package for calculating the significance of biological terms from gene expression data. `read more...`_
+topGO_ -topology-based Gene Ontology scoring- is a package for calculating the significance of biological terms from gene expression data.
 
-.. _read more...: http://www.bioconductor.org/packages/2.9/bioc/html/topGO.html
+.. _topGO: http://www.bioconductor.org/packages/release/bioc/html/topGO.html
 
 
 `topGO` requires:
