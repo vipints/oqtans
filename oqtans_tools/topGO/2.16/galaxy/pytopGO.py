@@ -2,20 +2,18 @@
 """
 Wrapper script for topGO Ontology program. 
 
-Usage:
-python topgo_main.py organism_name diff_gene_exp_data.in p-value fisher_test ontology_term
-
 Example:
-python pytopGO.py Arabidopsis_thaliana data/galaxy_import/gene_exp_col0.txt 0.01 fisher MF
+python pytopGO.py at gene_exp_col0.txt 0.01 fisher MF
 
-Requirements:
+Requirement:
     rpy2 :- https://pypi.python.org/pypi/rpy2
 """
 
 import re 
 import sys
+import os.path 
 import collections 
-import rpy2.robjects as robjects 
+#import rpy2.robjects as robjects 
 
 def get_exp_data(diff_fname):
     """Parse genes with differential expression score.
@@ -33,18 +31,23 @@ def get_exp_data(diff_fname):
     dfh.close()
     return gene_exp_rate
 
-def get_go_map_info(genes_w_pval, go_fname):
-    """Parse GO annotation file for the requested organism. 
-       The file expects Gene ID and GO terms in a tab delimited format.
-       AT1G01010       GO:0006355
+def get_gene2go_info(genes_w_pval, go_fname):
     """
+    Parse GO annotation file 
+    AT1G01010       GO:0006355
+    """
+
     gene2go=collections.defaultdict(list)
+
     go_fh=open(go_fname, 'rU')
     for line in go_fh:
         parts=line.strip('\n\r').split('\t')
+
         if parts[0] in genes_w_pval:
             gene2go[parts[0]].append(parts[1])
+
     go_fh.close()
+
     return dict(gene2go)
 
 def _vector_space_R(init_dict):
@@ -79,31 +82,34 @@ def __main__():
 
     try:
         organism = sys.argv[1]
-        diff_exp_fname = sys.argv[2]
-        thd_pval = float(sys.argv[3])
-        test_type = sys.argv[4]
-        ontology_term = sys.argv[5] ## molecular function (MF)
+        #diff_exp_fname = sys.argv[2]
+        #thd_pval = float(sys.argv[3])
+        #test_type = sys.argv[4]
+        #ontology_term = sys.argv[5] ## molecular function (MF)
     except:
         print __doc__
         sys.exit(-1)
 
-    ## ? GO term to Gene ID Mapping file for organisms.
-    # FIXME 
-    go_map_org=dict(Arabidopsis_thaliana="/mnt/galaxyTools/tools/oqtans/topGO/data/ATH_GO_TAIR.txt",
-		Drosophila_melanogaster="/mnt/galaxyTools/tools/oqtans/topGO/data/DM_GO_FB.txt",
-		Mus_musculus="/mnt/galaxyTools/tools/oqtans/topGO/data/MM_GO_MGI.txt",
-                Saccharomyces_cerevisiae="/mnt/galaxyTools/tools/oqtans/topGO/data/SCV_GO_SGD.txt")
+    ## Genes to GO db files, add more genes2GO data files here  
+    go_map_org=dict(at="Genes2GO_db/AT_Gene2GO.tab",
+		dm="Genes2GO_db/DM_Gene2GO.tab",
+		mm="Genes2GO_db/MM_Gene2GO.tab",
+        sc="Genes2GO_db/SC_Gene2GO.tab")
 
-    ## ? get the geneList based on differential expression data file 
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    db_fname = os.path.join(script_dir, go_map_org[organism])
+
+    ## get the geneList based on differential expression data file 
     all_genes=get_exp_data(diff_exp_fname)
 
-    ## ? GO mapping file (Custom GO annotations) 
-    gene_to_go=get_go_map_info(all_genes, go_map_org[organism])
+    ## GO mapping file (Custom GO annotations) 
+    gene_to_go = get_gene2go_info(all_genes, db_fname)
+
     if len(gene_to_go)==0:
         raise ValueError("No GO terms match to provide genes list, check for gene identifier mix-up.")
     
     ## ? run topGO 
-    exe_topGO(all_genes, gene_to_go, thd_pval, test_type, ontology_term)
+    #exe_topGO(all_genes, gene_to_go, thd_pval, test_type, ontology_term)
 
 if __name__=="__main__":
     __main__()
