@@ -3,20 +3,29 @@
 Convert data from Genbank format to GFF. 
 
 Usage: 
-python gbk_to_gff_conv.py in.gbk > out.gff 
+python gbk_to_gff.py in.gbk > out.gff 
 
 Requirements:
     BioPython:- http://biopython.org/
+    helper.py : https://github.com/vipints/GFFtools-GX/blob/master/helper.py
+
+Copyright (C) 
+    2009-2012 Friedrich Miescher Laboratory of the Max Planck Society, Tubingen, Germany.
+    2012-2014 Memorial Sloan Kettering Cancer Center New York City, USA.
 """
-import os, sys, re
+
+import os
+import re
+import sys
 import collections
 from Bio import SeqIO
-from common_util import _open_file
+import helper 
 
 def feature_table(chr_id, source, orient, genes, transcripts, cds, exons, unk):
     """
     Write the feature information
     """
+
     for gname, ginfo in genes.items():
         line = [str(chr_id), 
                 'gbk_to_gff',
@@ -26,13 +35,13 @@ def feature_table(chr_id, source, orient, genes, transcripts, cds, exons, unk):
                 '.',
                 ginfo[2],
                 '.',
-                'ID='+str(gname)+';Name='+str(gname)+';Note='+ginfo[-1]]
+                'ID=%s;Name=%s' % (str(gname), str(gname))]
         print '\t'.join(line) 
         ## construct the transcript line is not defined in the original file 
         t_line = [str(chr_id), 'gbk_to_gff', source, 0, 1, '.', ginfo[2], '.'] 
 
         if not transcripts:
-            t_line.append('ID=Transcript:'+str(gname)+';Parent='+str(gname))
+            t_line.append('ID=Transcript:%s;Parent=%s' % (str(gname), str(gname)))
 
             if exons: ## get the entire transcript region  from the defined feature
                 t_line[3] = str(exons[gname][0][0])
@@ -91,6 +100,7 @@ def feature_table(chr_id, source, orient, genes, transcripts, cds, exons, unk):
                 line[2] = 'transcript'
             else:
                 line[2] = 'mRNA'
+
             line[8] = 'ID=Unknown_Transcript_' + str(unk) + ';Parent=Unknown_Gene_' + str(unk)
             print "\t".join(line)
            
@@ -110,18 +120,23 @@ def exon_line_print(temp_line, trx_exons, parent, ftype):
     """
     Print the EXON feature line 
     """
+
     for ex in trx_exons:
         temp_line[2] = ftype
         temp_line[3] = str(ex[0])
         temp_line[4] = str(ex[1])
-        temp_line[8] = 'Parent='+parent
+        temp_line[8] = 'Parent=%s' % parent
         print '\t'.join(temp_line)
 
 def gbk_parse(fname):
     """
     Extract genome annotation recods from genbank format 
+
+    @args fname: gbk file name 
+    @type fname: str
     """
-    fhand = _open_file(gbkfname)
+
+    fhand = helper.open_file(gbkfname)
     unk = 1 
 
     for record in SeqIO.parse(fhand, "genbank"):
@@ -135,7 +150,11 @@ def gbk_parse(fname):
         for rec in record.features:
 
             if rec.type == 'source':
-                mol_type = rec.qualifiers['mol_type'][0]
+                try:
+                    mol_type = rec.qualifiers['mol_type'][0]
+                except:
+                    mol_type = '.'
+                    pass 
                 try:
                     chr_id = rec.qualifiers['chromosome'][0]
                 except:
@@ -161,8 +180,8 @@ def gbk_parse(fname):
                 gene_tags[fid] = (rec.location._start.position+1, 
                                     rec.location._end.position, 
                                     strand,
-                                    rec.type,
-                                    rec.qualifiers['note'][0])
+                                    rec.type
+                                    )
             elif rec.type == 'exon':
                 exon[fid].append((rec.location._start.position+1, 
                                     rec.location._end.position))
@@ -179,8 +198,8 @@ def gbk_parse(fname):
         # record extracted, generate feature table
         unk = feature_table(chr_id, mol_type, strand, gene_tags, tx_tags, cds, exon, unk)
         
-        #break
     fhand.close()
+
 
 if __name__=='__main__': 
 
