@@ -54,9 +54,11 @@ def _vector_space_R(init_dict):
     """Create a named vector in R"""
     return robjects.r.c(**init_dict)
 
-def exe_topGO(total_genes, gene_to_go, gene_pval, st_test, go_term):
-    """Wrap the R execution in python with rpy2.
+def run_topGO(total_genes, gene_to_go, gene_pval, st_test, go_term):
     """
+    Wrap the R execution in python with rpy2.
+    """
+
     robjects.r('''library(topGO)''')
     robjects.r('''topDiffgenes = function(allScore) {return (allScore < %s)}''' % gene_pval)
     params = {"ontology" : go_term,
@@ -74,6 +76,7 @@ def exe_topGO(total_genes, gene_to_go, gene_pval, st_test, go_term):
     #print results_table
     robjects.r('''library(Rgraphviz)''')
     robjects.r.printGraph(go_data, results_fis, firstSigNodes=table_entries, useInfo = "def", fn="resultFile", pdfSW="TRUE")
+
 
 def __main__():
     """
@@ -96,8 +99,8 @@ def __main__():
 		mm="Genes2GO_db/MM_Gene2GO.tab",
         sc="Genes2GO_db/SC_Gene2GO.tab")
 
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    db_fname = os.path.join(script_dir, go_map_org[organism])
+    prog_dir = os.path.dirname(os.path.abspath(__file__))
+    db_fname = os.path.join(prog_dir, go_map_org[organism])
 
     ## get the geneList based on differential expression data file 
     all_genes=get_exp_data(diff_exp_fname)
@@ -106,10 +109,10 @@ def __main__():
     gene_to_go = get_gene2go_info(all_genes, db_fname)
 
     if len(gene_to_go)==0:
-        raise ValueError("No GO terms match to provide genes list, check for gene identifier mix-up.")
+        raise ValueError("No GO terms match to provide genes list, Please check the gene identifier mis match.")
     
-    ## ? run topGO 
-    #exe_topGO(all_genes, gene_to_go, thd_pval, test_type, ontology_term)
+    ## run topGO 
+    #run_topGO(all_genes, gene_to_go, thd_pval, test_type, ontology_term)
 
 if __name__=="__main__":
     __main__()
