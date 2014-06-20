@@ -1,0 +1,51 @@
+---------------------
+ RiboDiff version 0.1
+---------------------
+
+DESCRIPTION
+-----------
+Detect Protein Translational Efficiency Difference 
+
+REQUIREMENTS
+------------
+- Python >=2.6.5 
+    Scipy >=0.7.1
+    Numpy
+    Statsmodels 
+
+- SAMTools >= 0.1.7
+
+GETTING STARTED
+---------------
+
+CONTENTS
+--------
+All relevant scripts for RiboDiff are located in 
+subdirectory src. 
+
+    ./galaxy
+    Galaxy tool configuration files
+
+    ./tools
+    contains small utils programs
+            
+LICENSE
+-------
+RiboDiff is licensed under the GPL version 3 or any later version
+(cf. LICENSE).
+
+CITE US
+-------
+If you use RiboDiff in your research you are kindly asked to cite 
+the following publication [1]:
+
+[1] 
+
+COPYRIGHT
+---------
+Copyright (C) 
+        2013-2014 Memorial Sloan-Kettering Cancer Center, New York City, USA 
+
+CONTACT
+-------
+support [at] oqtans.org 
