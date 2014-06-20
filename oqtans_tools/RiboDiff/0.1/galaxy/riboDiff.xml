@@ -1,0 +1,105 @@
+<tool id="ribo_diff" name="RiboDiff" version="0.1">
+  <description>Detect Protein Translational Efficiency Difference</description>
+  <command interpreter="bash"> 
+    ./../src/
+
+    $anno_file
+    $ribo_diff_out
+    $ribo_diff_out.extra_files_path
+
+#for $i in $groups
+#for $j in $i.replicates
+$j.bam_alignment:#slurp
+#end for
+
+#end for
+    >> $Log_File </command>
+  <inputs>
+
+   <!-- genome annotation file -->
+	<param format="gff3,gtf,gff" name="anno_file" type="data" label="Genome annotation file" help="A tab delimited format for storing sequence features and annotations GTF/GFF/GFF3."/>
+
+   <!-- bam files according to the  -->
+    <repeat name="groups" title="Group" min="2">
+        <repeat name="groups_type" title="Group type" max="2">
+            <param name="group_category" type="select" label="sequencing read type" help="Ribosome foot print sequencing or mRNA sequencing reads.">
+                <option value="ribo" selected="true">Ribosome footprint reads</option>
+		        <option value="rna">mRNA-seq reads</option>
+	        </param>
+
+            <repeat name="replicates" title="Replicate">
+                <param format="bam" name="bam_alignment" type="data" label="BAM alignment file" help="BAM files stores the sequencing read alignments."/>
+            </repeat>
+        </repeat>
+    </repeat>
+
+  </inputs>
+
+  <outputs>
+    <data format="txt" name="ribo_diff_out" label="${tool.name} on ${on_string}: Differential Translational Efficiency"/>
+    <data format="txt" name="Log_File" label="${tool.name} on ${on_string}: log"/>
+  </outputs>
+
+  <tests>
+    <test> 
+    <!--TODO-->
+    </test>
+  </tests> 
+
+  <help>
+
+.. class:: infomark
+
+**What it does** 
+
+RiboDiff is a tool for detecting protein translational efficiency difference based on RNA-Seq data.
+
+`RiboDiff` requires:
+
+Genome annotation file in GFF, containing the necessary information about the transcripts that are to be quantified.
+
+The BAM alignment files grouped into replicate groups, each containing several replicates. BAM files store the read alignments, The program will also work with only two groups containing only a single replicate each. However, this analysis has less statistical power and is therefore not recommended!
+
+------
+
+**Reference**
+
+If **RiboDiff** is used to obtain results for scientific publications it
+should be cited as [1]_.
+
+.. [1] 
+
+
+------
+
+.. class:: infomark
+
+**About formats**
+
+**GFF/GTF format** General Feature Format/Gene Transfer Format is a format for describing genes and other features associated with DNA, RNA and protein sequences. GFF3 lines have nine tab-separated fields::
+
+    1. seqid - The name of a chromosome or scaffold.
+    2. source - The program that generated this feature.
+    3. type - The name of this type of feature. Some examples of standard feature types are "gene", "CDS", "protein", "mRNA", and "exon". 
+    4. start - The starting position of the feature in the sequence. The first base is numbered 1.
+    5. stop - The ending position of the feature (inclusive).
+    6. score - A score between 0 and 1000. If there is no score value, enter ".".
+    7. strand - Valid entries include '+', '-', or '.' (for don't know/care).
+    8. phase - If the feature is a coding exon, frame should be a number between 0-2 that represents the reading frame of the first base. If the feature is not a coding exon, the value should be '.'.
+    9. attributes - All lines with the same group are linked together into a single item.
+
+For more information see http://www.sequenceontology.org/gff3.shtml
+
+**BAM format** The Sequence Alignment/Map (SAM) format is a
+tab-limited text format that stores large nucleotide sequence
+alignments. BAM is the binary version of a SAM file that allows for
+fast and intensive data processing. 
+
+The format specification and the description of SAMtools can be found on http://samtools.sourceforge.net/
+
+------
+
+RiboDiff Wrapper Version 0.1 (Jun. 2014)
+
+</help>
+</tool>
