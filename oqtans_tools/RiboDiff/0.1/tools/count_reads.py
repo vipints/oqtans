@@ -61,13 +61,25 @@ def parse_anno_from_gff3(options, contigs):
         sl = line.strip().split('\t')
         if sl[2] in ['mRNA', 'transcript']:
             tags=sl[8].split(';')
-            print tags[0][3:], tags[1][7:]
-            assert(tags[0][:2] == 'ID')
-            assert(tags[1][:6] == 'Parent')
             tags[0] = tags[0].replace("transcript", "")
             tags[0] = tags[0].replace("mRNA", "")
             tags[1] = tags[1].replace("gene", "")
-            trans2gene[tags[0][3:]] = tags[1][7:]
+            key_vals = dict() 
+            for at in tags:
+                key, vals = at.split('=')
+                key_vals[key] = vals
+            #assert(tags[0][:2] == 'ID')
+            #assert(tags[1][:6] == 'Parent')
+            #trans2gene[tags[0][3:]] = tags[1][7:]
+            
+            if key_vals.has_key('ID'):
+                child = key_vals['ID']
+
+            if key_vals.has_key('Parent'):
+                parent = key_vals['Parent']
+
+            print child
+            trans2gene[child] = parent 
 
     ### init genome structure
     for c in contigs:
@@ -101,9 +113,15 @@ def parse_anno_from_gff3(options, contigs):
             continue
 
         tags = sl[8].split(';')
+        key_vals = dict() 
         if sl[2] == 'exon':
             tags[0] = tags[0].replace("exon", "")
-            trans_id = tags[0][3:]
+            for at in tags:
+                key, vals = at.split('=')
+                key_vals[key] = vals
+
+            if key_vals.has_key('Parent'):
+                trans_id = key_vals['Parent']
 			
             gene_id = trans2gene[trans_id]
         else:
@@ -115,14 +133,12 @@ def parse_anno_from_gff3(options, contigs):
             idx2gene[gene_counter] = gene_id
             gene_counter += 1
 
-        #if sl[0] == 'M':
-        #    sl[0] = 'MT'
         ### store for each position of the transcriptome one gene id
         anno[sl[0]][int(sl[3]):int(sl[4]) + 1] = array.array('H', [gene2idx[gene_id]] * (int(sl[4]) + 1 - int(sl[3])))
 
     if options.verbose:
         print >> sys.stderr, "... done"
-    
+    """ 
     if options.verbose:
         print >> sys.stderr, "Dumping exon array ..."
 
@@ -143,8 +159,9 @@ def parse_anno_from_gff3(options, contigs):
 
     if options.verbose:
         print >> sys.stderr, "... done"
-
+    """
     return (anno, idx2gene)
+
 
 def parse_anno_from_gtf(options, contigs):
     """This function reads the gtf input file and returns the information in an
@@ -202,7 +219,7 @@ def parse_anno_from_gtf(options, contigs):
 
     if options.verbose:
         print >> sys.stderr, "... done"
-    
+    """    
     if options.verbose:
         print >> sys.stderr, "Dumping exon array ..."
 
@@ -223,9 +240,10 @@ def parse_anno_from_gtf(options, contigs):
 
     if options.verbose:
         print >> sys.stderr, "... done"
+    """
 
     return (anno, idx2gene)
-    #pdb.set_trace()
+
 
 def read_header(options, infile):
     """Parses the alignment header and extracts contig information"""
@@ -233,7 +251,6 @@ def read_header(options, infile):
     contigs = dict()
     line = ''
     if options.is_bam:
-        #chrm = infile.getrname(line.tid).replace('chr', '')
         for i in range(len(infile.references)):
             if contigs.has_key(infile.references[i]):
                 if not contigs[infile.references[i]] == infile.lengths[i]:
@@ -284,7 +301,42 @@ def compress_counts(count_list, genes):
             compressed_list.append([genes[g], a - b])
             g += 1
     return compressed_list
-    
+
+
+def check_file_type(gff_fname):
+    """
+    check the file type
+    """
+
+    is_gff = False
+
+    for line in open(gff_fname, 'r'):
+        if line[0] == '#':
+            continue
+        line = line.strip('\n\r').split('\t') 
+        
+        try:
+            col9 = line[8]
+        except:
+            return is_gff
+
+        col9 = col9.rstrip(';| ')
+        atbs = col9.split(" ; ")
+        if len(atbs) == 1:
+            atbs = col9.split("; ")
+            if len(atbs) ==1:
+                atbs = col9.split(";")
+
+        gff3_pat = re.compile("\w+=")
+        #gtf_pat = re.compile("\s?\w+\s")
+
+        if gff3_pat.match(atbs[0]):
+            is_gff = True 
+
+        break 
+
+    return is_gff
+
 
 def main():
     """Main Program Procedure"""
@@ -300,9 +352,13 @@ def main():
         ### open file stream
         if file == '-':
             infile = sys.stdin
-        elif (len(file) > 3 and file[-3:] == 'bam') or options.bam_force:
-            infile = pysam.Samfile(file, 'rb')
-            options.is_bam = True
+        elif len(file) > 3 or options.bam_force:
+            try:
+                infile = pysam.Samfile(file, 'rb')
+                options.is_bam = True
+            except:
+                print 'NOT able to read the alignment file %s' % file 
+                continue 
         else:
             infile = open(file, 'r')
 
@@ -311,6 +367,7 @@ def main():
                 print >> sys.stderr, "Reading alignment from stdin\n"
             else:
                 print >> sys.stderr, "Reading alignment from %s\n" % options.alignment
+
 
         ### get contigs from alignment data
         if len(contigs) == 0:
@@ -338,12 +395,17 @@ def main():
                     t1 = time.time() - t0
                     print >> sys.stderr, "... done - last took %i secs" % t1
             else:
-                if options.anno[-4:] == 'gff3':
+                is_gff = check_file_type(options.anno)
+
+                if is_gff:
                     ### read annotation from GFF3
                     (anno, idx2gene) = parse_anno_from_gff3(options, contigs)
                 else:
                     ### read annotation from GTF
                     (anno, idx2gene) = parse_anno_from_gtf(options, contigs)
+
+        print options 
+        sys.exit()
 
         ### count reads
         counter = 1
