@@ -13,12 +13,12 @@ import re
 import sys
 import os.path 
 import collections 
-#import rpy2.robjects as robjects 
+import rpy2.robjects as robjects 
 
 def get_exp_data(diff_fname):
-    """Parse genes with differential expression score.
-       The file expects genes with a score in a tab delimited format.
-       AT1G01010       0.005
+    """
+    Parse genes with differential expression score.
+    The file expects genes with a score in a tab delimited format.
     """
     gene_exp_rate=dict()
     dfh=open(diff_fname, "rU")
@@ -33,8 +33,7 @@ def get_exp_data(diff_fname):
 
 def get_gene2go_info(genes_w_pval, go_fname):
     """
-    Parse GO annotation file 
-    AT1G01010       GO:0006355
+    Parse gene2GO annotation file 
     """
 
     gene2go=collections.defaultdict(list)
@@ -85,10 +84,10 @@ def __main__():
 
     try:
         organism = sys.argv[1]
-        #diff_exp_fname = sys.argv[2]
-        #thd_pval = float(sys.argv[3])
-        #test_type = sys.argv[4]
-        #ontology_term = sys.argv[5] ## molecular function (MF)
+        diff_exp_fname = sys.argv[2]
+        thd_pval = float(sys.argv[3])
+        test_type = sys.argv[4]
+        ontology_term = sys.argv[5] ## molecular function (MF)
     except:
         print __doc__
         sys.exit(-1)
