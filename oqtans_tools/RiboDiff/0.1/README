@@ -11,6 +11,7 @@ REQUIREMENTS
 - Python >=2.6.5 
     Scipy >=0.7.1
     Numpy
+    PySam 
     Statsmodels 
 
 - SAMTools >= 0.1.7
