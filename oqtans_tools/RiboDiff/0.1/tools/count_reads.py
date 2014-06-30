@@ -78,7 +78,6 @@ def parse_anno_from_gff3(options, contigs):
             if key_vals.has_key('Parent'):
                 parent = key_vals['Parent']
 
-            print child
             trans2gene[child] = parent 
 
     ### init genome structure
@@ -123,7 +122,10 @@ def parse_anno_from_gff3(options, contigs):
             if key_vals.has_key('Parent'):
                 trans_id = key_vals['Parent']
 			
-            gene_id = trans2gene[trans_id]
+            try:
+                gene_id = trans2gene[trans_id]
+            except:
+                print >> sys.stdout, 'Currently only >mRNA, transcript< are supported'
         else:
             print >> sys.stderr, 'Currently only >exon< is supported'
             sys.exit(1)
@@ -212,8 +214,6 @@ def parse_anno_from_gtf(options, contigs):
             idx2gene[gene_counter] = gene_id
             gene_counter += 1
 
-        #if sl[0] == 'chrM':
-        #    sl[0] = 'chrM_rCRS'
         ### store for each position of the transcriptome one gene id
         anno[sl[0]][int(sl[3]):int(sl[4]) + 1] = array.array('H', [gene2idx[gene_id]] * (int(sl[4]) + 1 - int(sl[3])))
 
@@ -398,14 +398,12 @@ def main():
                 is_gff = check_file_type(options.anno)
 
                 if is_gff:
+                    print 'gff-type file are here '
                     ### read annotation from GFF3
                     (anno, idx2gene) = parse_anno_from_gff3(options, contigs)
                 else:
                     ### read annotation from GTF
                     (anno, idx2gene) = parse_anno_from_gtf(options, contigs)
-
-        print options 
-        sys.exit()
 
         ### count reads
         counter = 1
