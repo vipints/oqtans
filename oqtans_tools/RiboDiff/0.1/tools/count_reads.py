@@ -166,8 +166,10 @@ def parse_anno_from_gff3(options, contigs):
 
 
 def parse_anno_from_gtf(options, contigs):
-    """This function reads the gtf input file and returns the information in an
-       internal data structure"""
+    """
+    This function reads the gtf input file and returns the information in an
+    internal data structure
+    """
 
     anno = dict()
     idx2gene = dict()
