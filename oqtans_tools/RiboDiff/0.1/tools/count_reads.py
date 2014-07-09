@@ -1,4 +1,10 @@
 #!/usr/bin/env python 
+"""
+Counting the number of reads spanning over an annotated genomic feature
+
+Requirement: 
+    pysam: 
+"""
 
 import os
 import re
