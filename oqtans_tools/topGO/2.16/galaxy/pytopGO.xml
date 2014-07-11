@@ -1,32 +1,47 @@
 <tool id="topgo" name="topGO" version="2.16.0">
-  <description>Enrichment analysis for Gene Ontology</description>
-  <command interpreter="python"> 
-     pytopGO.py $topgo_out.extra_files_path $topgo_out $organism $diff_exp_genes $pvalue $stat_test $ontology_type 
-  </command>
-  <inputs>
-	<param name="organism" type="select" label="Gene Ontology map file of" help="Gene2GO mapping file of the listed organisms are available.">
-        <option value="A_thaliana">Arabidopsis thaliana</option>
-        <option value="D_melanogaster">Drosophila melanogaster</option>
-        <option value="M_musculus">Mus musculus</option>
-        <option value="S_cerevisiae">Saccharomyces cerevisiae</option>
-    </param>
-	<param format="txt" name="diff_exp_genes" type="data" label="Gene list" help="e.g. differentially expressed genes with a score."/>
-    <param name="pvalue" type="float" value="0.01" label="p-value threshold" help="selecting candidate genes for GO analysis with a p-value."/>
-    <param name="stat_test" type="select" label="Enrichment analysis test types" help="topGO performs test statistics based on gene counts (fisher) and gene scores (ks)." >
-        <option value="fisher">fisher</option>
-    </param>
-    <param name="ontology_type" type="select" label="Type of GO ontology to analyze" help="Depends on the experiment, choose one of the GO ontology type.">
-        <option value="MF">MF (molecular function)</option>
-        <option value="CC">CC (cellular component)</option>
-        <option value="BP">BP (biological process)</option>
-    </param>
-  </inputs>
+    <description>Enrichment analysis for Gene Ontology</description>
+    <command interpreter="python"> 
+        pytopGO.py 
+        $topgo_out.extra_files_path 
+        $topgo_out $organism 
+        $diff_exp_genes 
+        $pvalue 
+        $stat_test 
+        $ontology_type 
+    </command>
+    <inputs>
+	    <param name="organism" type="select" label="Gene Ontology map file of" help="Gene2GO mapping file of the listed organisms are available.">
+            <option value="A_thaliana">Arabidopsis thaliana</option>
+            <option value="D_melanogaster">Drosophila melanogaster</option>
+            <option value="M_musculus">Mus musculus</option>
+            <option value="S_cerevisiae">Saccharomyces cerevisiae</option>
+        </param>
 
-  <outputs>
-    <data format="pdf" name="topgo_out" label="${tool.name} GO graph of ${diff_exp_genes.name}"/>
-  </outputs>
+        <param format="txt" name="diff_exp_genes" type="data" label="Gene list" help="e.g. differentially expressed genes with a score."/>
 
-  <help>
+        <param name="pvalue" type="float" value="0.01" label="p-value threshold" help="selecting candidate genes for GO analysis with a p-value."/>
+    
+        <param name="stat_test" type="select" label="Enrichment analysis test types" help="topGO performs test statistics based on gene counts (fisher) and gene scores (ks)." >
+            <option value="fisher">fisher</option>
+        </param>
+
+        <param name="ontology_type" type="select" label="Type of GO ontology to analyze" help="Depends on the experiment, choose one of the GO ontology type.">
+            <option value="MF">MF (molecular function)</option>
+            <option value="CC">CC (cellular component)</option>
+            <option value="BP">BP (biological process)</option>
+        </param>
+    </inputs>
+
+    <outputs>
+        <data format="pdf" name="topgo_out" label="${tool.name} GO graph of ${diff_exp_genes.name}"/>
+    </outputs>
+
+	<tests>
+        <test>
+        </test>
+	</tests>
+
+    <help>
 
 .. class:: infomark
 
@@ -74,7 +89,7 @@ If **topGO** is used to obtain results for scientific publications it should be 
 
 ------
 
-topGO Wrapper Version 0.1 (June 2012)
+topGO Wrapper Version 0.2 (June 2014)
 
 </help>
 </tool>
