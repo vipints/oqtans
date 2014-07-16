@@ -79,11 +79,10 @@ topGO_ -topology-based Gene Ontology scoring- is a package for calculating the s
 
 ------
 
-**Licenses**
+**Reference**
 
 If **topGO** is used to obtain results for scientific publications it should be cited as [1]_.
 
-**References** 
 
 .. [1] Adrian Alexa, Jörg Rahnenführer, Thomas Lengauer: Improved scoring of functional groups from gene expression data by decorrelating GO graph structure. 
 
