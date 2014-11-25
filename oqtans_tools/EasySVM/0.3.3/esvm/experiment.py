@@ -61,21 +61,30 @@ from poim import reshape_normalize_contribs, compute_weight_mass
 def non_atcg_convert(seq, nuc_con):
     """ Converts Non ATCG characters from DNA sequence """
     
-    if nuc_con == '':sys.stderr.write("usage: Provide a choice for non ACGT nucleotide conversion [T|A|C|G|R|Y|N] at last\n");sys.exit(-1)
-    if re.match(r'[^ATCGRYN]', nuc_con):sys.stderr.write("usage: Conversion nucleotide choice -"+ nuc_con +"- failed. pick one from [T|A|C|G|R|Y|N]\n");sys.exit(-1)
+    if nuc_con == '':
+        sys.stderr.write("usage: Provide a choice for non ACGT nucleotide conversion [T|A|C|G|R|Y|N] at last\n")
+        sys.exit(-1)
+
+    if re.match(r'[^ATCGRYN]', nuc_con):
+        sys.stderr.write("usage: Conversion nucleotide choice -%s- failed. pick one from [T|A|C|G|R|Y|N]\n" % nuc_con)
+        sys.exit(-1)
     
     nuc_con = nuc_con.upper()
     mod_seq = []
     for i in range(len(seq)):
         if re.search(r'[^ACTG]', seq[i], re.IGNORECASE):
-            if nuc_con == 'A' or nuc_con == 'T' or nuc_con == 'C' or nuc_con == 'G':
+            if nuc_con in ['A', 'T', 'C', 'G']:
                 seq[i] = re.sub(r'[^ATCG|actg]', nuc_con, seq[i])
                 seq[i] = seq[i].upper()
                 mod_seq.append(seq[i])
                 continue
-            if nuc_con == 'N':(nucleotide, line) = ('ATCG', '')
-            if nuc_con == 'R':(nucleotide, line) = ('AG', '')
-            if nuc_con == 'Y':(nucleotide, line) = ('TC', '')
+
+            if nuc_con == 'N':
+                (nucleotide, line) = ('ATCG', '')
+            elif nuc_con == 'R':
+                (nucleotide, line) = ('AG', '')
+            elif nuc_con == 'Y':
+                (nucleotide, line) = ('TC', '')
                 
             for single_nuc in seq[i]:
                 if re.match(r'[^ACGT]', single_nuc, re.IGNORECASE):
