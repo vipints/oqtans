@@ -338,11 +338,14 @@ def train(trainex,trainlab,C,kname,kparam,seq_source,nuc_con):
 
     svm.io.disable_progress()
     svm.set_batch_computation_enabled(True)
+
     svm.set_linadd_enabled(True)
     svm.set_epsilon(1e-5)
     svm.parallel.set_num_threads(svm.parallel.get_num_cpus())
-    
     svm.train()
+
+    import pdb 
+    pdb.set_trace() 
 
     return (svm, kernel, feats_train, preproc)
 
@@ -350,6 +353,8 @@ def train_and_test(trainex,trainlab,testex,C,kname,kparam, seq_source, nuc_con):
     """Trains a SVM with the given kernel, and predict on the test examples"""
 
     (svm, kernel, feats_train, preproc) = train(trainex,trainlab,C,kname,kparam,seq_source,nuc_con)
+    print kernel 
+
     (feats_test, preproc) = create_features(kname, testex, kparam, False, preproc, seq_source, nuc_con)
     if kname == 'spec2' or kname == 'cumspec2':
         for feats in feats_train.values():
@@ -391,7 +396,8 @@ def crossvalidation(cv, kname, kparam, C, all_examples, all_labels, seq_source, 
         for i in xrange(len(svmout)):
             all_outputs[partitions[repetition][i]] = svmout[i]
             all_split[partitions[repetition][i]] = repetition ;
-        
+
+    print 'Done %i-fold crossvalidation' % cv
     return (all_outputs, all_split)
 
 def evaluate(predictions, splitassignments, labels, roc_fname=None, prc_fname=None):
@@ -538,7 +544,10 @@ def svm_modelsel(argv):
     """A top level script to parse input parameters and run model selection"""
 
     assert(argv[1]=='modelsel')
-    if len(argv)<5:sys.stderr.write("usage: %s modelsel repeat Cs kernelname [kernelparameters] [arff|fasta] inputfiles  outputfile [dna|protein] non(nucleotide|amino)converter\n" % argv[0]);sys.exit(-1)
+
+    if len(argv)<5:
+        sys.stderr.write("usage: %s modelsel repeat Cs kernelname [kernelparameters] [arff|fasta] inputfiles  outputfile [dna|protein] non(nucleotide|amino)converter\n" % argv[0])
+        sys.exit(-1)
 
     # parse input parameters
     cv = int(argv[2])
@@ -548,8 +557,12 @@ def svm_modelsel(argv):
 
     (seq_source, nuc_con) = ('', '')
     if kernelname == 'spec' or kernelname == 'wd':
-        if len(argv_rest)<1:sys.stderr.write("outputfile [dna|protein] non(nucleotide|amino)converter are missing\n");sys.exit(-1)
-        if len(argv_rest)<2:sys.stderr.write("[dna|protein] non(nucleotide|amino)converter are missing\n");sys.exit(-1)
+        if len(argv_rest)<1:
+            sys.stderr.write("outputfile [dna|protein] non(nucleotide|amino)converter are missing\n")
+            sys.exit(-1)
+        if len(argv_rest)<2:
+            sys.stderr.write("[dna|protein] non(nucleotide|amino)converter are missing\n")
+            sys.exit(-1)
         if len(argv_rest)<3:
             if argv_rest[-1] == 'dna':
                 sys.stderr.write("non-nucleotide converter like [A|T|C|G|R|Y|N] is missing. Cannot continue.\n")
@@ -560,13 +573,19 @@ def svm_modelsel(argv):
             else:
                 sys.stderr.write("Here expect FASTA sequence type as [dna|protein] instead of -"+ argv_rest[-1] +"- Cannot continue.\n")
                 sys.exit(-1)
-        if len(argv_rest)>3:sys.stderr.write("Too many arguments\n");sys.exit(-1)
+        if len(argv_rest)>3:
+            sys.stderr.write("Too many arguments\n")
+            sys.exit(-1)
         seq_source = argv_rest[1]
         nuc_con = argv_rest[2]
     
     if kernelname == 'linear' or kernelname == 'gauss' or kernelname== 'poly':
-        if len(argv_rest)<1:sys.stderr.write("outputfile missing\n");sys.exit(-1)
-        if len(argv_rest)>1:sys.stderr.write("Too many arguments\n");sys.exit(-1)
+        if len(argv_rest)<1:
+            sys.stderr.write("outputfile missing\n")
+            sys.exit(-1)
+        if len(argv_rest)>1:
+            sys.stderr.write("Too many arguments\n")
+            sys.exit(-1)
 
     outfilename = argv_rest[0]
 
