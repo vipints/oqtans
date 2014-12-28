@@ -344,8 +344,8 @@ def train(trainex,trainlab,C,kname,kparam,seq_source,nuc_con):
     svm.parallel.set_num_threads(svm.parallel.get_num_cpus())
     svm.train()
 
-    import pdb 
-    pdb.set_trace() 
+    #import pdb 
+    #pdb.set_trace() 
 
     return (svm, kernel, feats_train, preproc)
 
