@@ -320,6 +320,7 @@ def train(trainex,trainlab,C,kname,kparam,seq_source,nuc_con):
         kernel.init(feats_train['combined'], feats_train['combined'])
     else:    
         kernel.init(feats_train, feats_train)
+
     kernel.io.disable_progress()
     kernel.set_optimization_type(SLOWBUTMEMEFFICIENT)
     labels = BinaryLabels(numpy.array(trainlab,numpy.double))
@@ -334,6 +335,7 @@ def train(trainex,trainlab,C,kname,kparam,seq_source,nuc_con):
     else:
         SVMClass=DefaultSVM 
 
+
     svm = SVMClass(C, kernel, labels)
 
     svm.io.disable_progress()
@@ -344,18 +346,15 @@ def train(trainex,trainlab,C,kname,kparam,seq_source,nuc_con):
     svm.parallel.set_num_threads(svm.parallel.get_num_cpus())
     svm.train()
 
-    #import pdb 
-    #pdb.set_trace() 
-
-    return (svm, kernel, feats_train, preproc)
+    return (svm, kernel, feats_train, preproc) 
 
 def train_and_test(trainex,trainlab,testex,C,kname,kparam, seq_source, nuc_con):
     """Trains a SVM with the given kernel, and predict on the test examples"""
 
     (svm, kernel, feats_train, preproc) = train(trainex,trainlab,C,kname,kparam,seq_source,nuc_con)
-    print kernel 
 
     (feats_test, preproc) = create_features(kname, testex, kparam, False, preproc, seq_source, nuc_con)
+
     if kname == 'spec2' or kname == 'cumspec2':
         for feats in feats_train.values():
             feats.io.disable_progress()
@@ -387,6 +386,7 @@ def crossvalidation(cv, kname, kparam, C, all_examples, all_labels, seq_source, 
     sum_roc = 0.0
     all_outputs=[0.0] * len(all_labels)
     all_split=[-1] * len(all_labels)
+    
 
     for repetition in xrange(cv):
         XT, LT, XTE, LTE = getCurrentSplit(repetition, partitions, all_labels, all_examples)
@@ -542,6 +542,7 @@ def svm_cv(argv):
 
 def svm_modelsel(argv):
     """A top level script to parse input parameters and run model selection"""
+
 
     assert(argv[1]=='modelsel')
 
@@ -794,6 +795,7 @@ def svm_poim(argv):
 
     # train svm and compute POIMs
     (svm, kernel, feats_train, preproc) = train(examples,labels,C,kernelname,kparam,seq_source,nuc_con)
+    print "done with training "
     (poim, max_poim, diff_poim, poim_totalmass) = compute_poims(svm, kernel, poimdegree, len(examples[0]))
 
     # plot poims
