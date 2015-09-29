@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#
+# auto installation script 
 # 
 set -e 
 

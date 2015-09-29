@@ -49,7 +49,7 @@ then
     easy_install --prefix=${OQTANS_DEP_PATH} HTSeq
     easy_install --prefix=${OQTANS_DEP_PATH} rpy2
 
-    for fn in antlr_python_runtime-3.1.3.tar.bz2 arff-1.0c.tar.bz2;
+    for fn in antlr_python_runtime-3.0.1.tar.bz2 arff-1.0c.tar.bz2;
     do 
         tar -xjf $fn
         cd $basedir/${fn%.tar.bz2}

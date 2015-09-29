@@ -61,21 +61,30 @@ from poim import reshape_normalize_contribs, compute_weight_mass
 def non_atcg_convert(seq, nuc_con):
     """ Converts Non ATCG characters from DNA sequence """
     
-    if nuc_con == '':sys.stderr.write("usage: Provide a choice for non ACGT nucleotide conversion [T|A|C|G|R|Y|N] at last\n");sys.exit(-1)
-    if re.match(r'[^ATCGRYN]', nuc_con):sys.stderr.write("usage: Conversion nucleotide choice -"+ nuc_con +"- failed. pick one from [T|A|C|G|R|Y|N]\n");sys.exit(-1)
+    if nuc_con == '':
+        sys.stderr.write("usage: Provide a choice for non ACGT nucleotide conversion [T|A|C|G|R|Y|N] at last\n")
+        sys.exit(-1)
+
+    if re.match(r'[^ATCGRYN]', nuc_con):
+        sys.stderr.write("usage: Conversion nucleotide choice -%s- failed. pick one from [T|A|C|G|R|Y|N]\n" % nuc_con)
+        sys.exit(-1)
     
     nuc_con = nuc_con.upper()
     mod_seq = []
     for i in range(len(seq)):
         if re.search(r'[^ACTG]', seq[i], re.IGNORECASE):
-            if nuc_con == 'A' or nuc_con == 'T' or nuc_con == 'C' or nuc_con == 'G':
+            if nuc_con in ['A', 'T', 'C', 'G']:
                 seq[i] = re.sub(r'[^ATCG|actg]', nuc_con, seq[i])
                 seq[i] = seq[i].upper()
                 mod_seq.append(seq[i])
                 continue
-            if nuc_con == 'N':(nucleotide, line) = ('ATCG', '')
-            if nuc_con == 'R':(nucleotide, line) = ('AG', '')
-            if nuc_con == 'Y':(nucleotide, line) = ('TC', '')
+
+            if nuc_con == 'N':
+                (nucleotide, line) = ('ATCG', '')
+            elif nuc_con == 'R':
+                (nucleotide, line) = ('AG', '')
+            elif nuc_con == 'Y':
+                (nucleotide, line) = ('TC', '')
                 
             for single_nuc in seq[i]:
                 if re.match(r'[^ACGT]', single_nuc, re.IGNORECASE):
@@ -311,6 +320,7 @@ def train(trainex,trainlab,C,kname,kparam,seq_source,nuc_con):
         kernel.init(feats_train['combined'], feats_train['combined'])
     else:    
         kernel.init(feats_train, feats_train)
+
     kernel.io.disable_progress()
     kernel.set_optimization_type(SLOWBUTMEMEFFICIENT)
     labels = BinaryLabels(numpy.array(trainlab,numpy.double))
@@ -325,23 +335,26 @@ def train(trainex,trainlab,C,kname,kparam,seq_source,nuc_con):
     else:
         SVMClass=DefaultSVM 
 
+
     svm = SVMClass(C, kernel, labels)
 
     svm.io.disable_progress()
     svm.set_batch_computation_enabled(True)
+
     svm.set_linadd_enabled(True)
     svm.set_epsilon(1e-5)
     svm.parallel.set_num_threads(svm.parallel.get_num_cpus())
-    
     svm.train()
 
-    return (svm, kernel, feats_train, preproc)
+    return (svm, kernel, feats_train, preproc) 
 
 def train_and_test(trainex,trainlab,testex,C,kname,kparam, seq_source, nuc_con):
     """Trains a SVM with the given kernel, and predict on the test examples"""
 
     (svm, kernel, feats_train, preproc) = train(trainex,trainlab,C,kname,kparam,seq_source,nuc_con)
+
     (feats_test, preproc) = create_features(kname, testex, kparam, False, preproc, seq_source, nuc_con)
+
     if kname == 'spec2' or kname == 'cumspec2':
         for feats in feats_train.values():
             feats.io.disable_progress()
@@ -373,6 +386,7 @@ def crossvalidation(cv, kname, kparam, C, all_examples, all_labels, seq_source, 
     sum_roc = 0.0
     all_outputs=[0.0] * len(all_labels)
     all_split=[-1] * len(all_labels)
+    
 
     for repetition in xrange(cv):
         XT, LT, XTE, LTE = getCurrentSplit(repetition, partitions, all_labels, all_examples)
@@ -382,7 +396,8 @@ def crossvalidation(cv, kname, kparam, C, all_examples, all_labels, seq_source, 
         for i in xrange(len(svmout)):
             all_outputs[partitions[repetition][i]] = svmout[i]
             all_split[partitions[repetition][i]] = repetition ;
-        
+
+    print 'Done %i-fold crossvalidation' % cv
     return (all_outputs, all_split)
 
 def evaluate(predictions, splitassignments, labels, roc_fname=None, prc_fname=None):
@@ -528,8 +543,12 @@ def svm_cv(argv):
 def svm_modelsel(argv):
     """A top level script to parse input parameters and run model selection"""
 
+
     assert(argv[1]=='modelsel')
-    if len(argv)<5:sys.stderr.write("usage: %s modelsel repeat Cs kernelname [kernelparameters] [arff|fasta] inputfiles  outputfile [dna|protein] non(nucleotide|amino)converter\n" % argv[0]);sys.exit(-1)
+
+    if len(argv)<5:
+        sys.stderr.write("usage: %s modelsel repeat Cs kernelname [kernelparameters] [arff|fasta] inputfiles  outputfile [dna|protein] non(nucleotide|amino)converter\n" % argv[0])
+        sys.exit(-1)
 
     # parse input parameters
     cv = int(argv[2])
@@ -539,8 +558,12 @@ def svm_modelsel(argv):
 
     (seq_source, nuc_con) = ('', '')
     if kernelname == 'spec' or kernelname == 'wd':
-        if len(argv_rest)<1:sys.stderr.write("outputfile [dna|protein] non(nucleotide|amino)converter are missing\n");sys.exit(-1)
-        if len(argv_rest)<2:sys.stderr.write("[dna|protein] non(nucleotide|amino)converter are missing\n");sys.exit(-1)
+        if len(argv_rest)<1:
+            sys.stderr.write("outputfile [dna|protein] non(nucleotide|amino)converter are missing\n")
+            sys.exit(-1)
+        if len(argv_rest)<2:
+            sys.stderr.write("[dna|protein] non(nucleotide|amino)converter are missing\n")
+            sys.exit(-1)
         if len(argv_rest)<3:
             if argv_rest[-1] == 'dna':
                 sys.stderr.write("non-nucleotide converter like [A|T|C|G|R|Y|N] is missing. Cannot continue.\n")
@@ -551,13 +574,19 @@ def svm_modelsel(argv):
             else:
                 sys.stderr.write("Here expect FASTA sequence type as [dna|protein] instead of -"+ argv_rest[-1] +"- Cannot continue.\n")
                 sys.exit(-1)
-        if len(argv_rest)>3:sys.stderr.write("Too many arguments\n");sys.exit(-1)
+        if len(argv_rest)>3:
+            sys.stderr.write("Too many arguments\n")
+            sys.exit(-1)
         seq_source = argv_rest[1]
         nuc_con = argv_rest[2]
     
     if kernelname == 'linear' or kernelname == 'gauss' or kernelname== 'poly':
-        if len(argv_rest)<1:sys.stderr.write("outputfile missing\n");sys.exit(-1)
-        if len(argv_rest)>1:sys.stderr.write("Too many arguments\n");sys.exit(-1)
+        if len(argv_rest)<1:
+            sys.stderr.write("outputfile missing\n")
+            sys.exit(-1)
+        if len(argv_rest)>1:
+            sys.stderr.write("Too many arguments\n")
+            sys.exit(-1)
 
     outfilename = argv_rest[0]
 
@@ -766,6 +795,7 @@ def svm_poim(argv):
 
     # train svm and compute POIMs
     (svm, kernel, feats_train, preproc) = train(examples,labels,C,kernelname,kparam,seq_source,nuc_con)
+    print "done with training "
     (poim, max_poim, diff_poim, poim_totalmass) = compute_poims(svm, kernel, poimdegree, len(examples[0]))
 
     # plot poims

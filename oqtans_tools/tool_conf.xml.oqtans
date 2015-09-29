@@ -49,14 +49,13 @@
      <tool file="oqtans/oqtans_tools/RNAgeeq/0.2/SAFT/galaxy/SAFT.xml" />
      <tool file="oqtans/oqtans_tools/RNAgeeq/0.2/MM_Resolve/galaxy/MMRtool.xml" />
   </section>
-  <section name="GFF Toolkit " id="gfftools-0.1">
-    <label text="Grooming Programs" id="groomer" />
-    <tool file="oqtans/oqtans_tools/GFFtools/0.1/examine.xml" />
-    <tool file="oqtans/oqtans_tools/GFFtools/0.1/feature_scan.xml" />
+  <section name="GFF Toolkit " id="gfftools-0.2">
     <label text="Converter Programs" id="converter" />
-    <tool file="oqtans/oqtans_tools/GFFtools/0.1/gtf_to_gff3.xml" />
-    <tool file="oqtans/oqtans_tools/GFFtools/0.1/bed_to_gff3.xml" />
-    <tool file="oqtans/oqtans_tools/GFFtools/0.1/genbank_to_gff3.xml" />
+    <tool file="oqtans/oqtans_tools/GFFtools/0.2/bed_to_gff.xml" />
+    <tool file="oqtans/oqtans_tools/GFFtools/0.2/gbk_to_gff.xml" />
+    <tool file="oqtans/oqtans_tools/GFFtools/0.2/gff_to_bed.xml" />
+    <tool file="oqtans/oqtans_tools/GFFtools/0.2/gff_to_gtf.xml" />
+    <tool file="oqtans/oqtans_tools/GFFtools/0.2/gtf_to_gff.xml" />
   </section>
   <section name="SVM Toolbox " id="SVMToolbox-0.3.3">
     <label text="Toy Data (v0.3.3)" id="toydata-0.3.3" />

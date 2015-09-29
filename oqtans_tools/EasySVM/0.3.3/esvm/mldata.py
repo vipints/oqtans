@@ -42,7 +42,7 @@ import csv
 import re
 
 try:
-    from scipy.io import arff
+    import arff
     have_arff = True
 except ImportError:
     have_arff = False
