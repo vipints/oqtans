@@ -1,4 +1,4 @@
-<tool id="ribo_diff" name="RiboDiff" version="0.1">
+<tool id="ribodiff" name="RiboDiff" version="0.1">
   <description>Detect Protein Translational Efficiency Difference</description>
   <command interpreter="bash"> 
     ./../src/
