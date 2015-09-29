@@ -16,7 +16,7 @@ share-string for Galaxy Cloudman: cm-ba5c56b95144e564f70e5762dc5fa177/shared/201
 
 Contact: support [at] oqtans.org
 
-[Available under GPL license](http://www.gnu.org/copyleft/gpl.html)
+[Available under BSD license](http://opensource.org/licenses/BSD-3-Clause)
 
 ##### Configuration:
 ###### ============

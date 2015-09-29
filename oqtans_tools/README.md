@@ -4,7 +4,7 @@
 
 [Description:](http://oqtans.org) Online Quantitative Transcriptome Analysis
 
-[Available under GPL license](http://www.gnu.org/licenses/gpl.html)
+[Available under BSD license](http://opensource.org/licenses/BSD-3-Clause)
 
 As stated in ./INSTALL file, to compile binary files associated with oqtans tool components, execute:
 
